@@ -2,8 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
 
 const anthropic = new Anthropic({
-  baseURL: process.env.AI_INTEGRATIONS_ANTHROPIC_BASE_URL,
-  apiKey: process.env.AI_INTEGRATIONS_ANTHROPIC_API_KEY,
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
 const SYSTEM_PROMPTS: Record<string, string> = {
@@ -42,8 +41,8 @@ export async function POST(req: NextRequest) {
       async start(controller) {
         try {
           const response = await anthropic.messages.stream({
-            model: "claude-sonnet-4-6",
-            max_tokens: 8192,
+            model: "claude-sonnet-4-5",
+            max_tokens: 1024,
             system: systemBase + moduleContext,
             messages: messages.map((m: { role: string; content: string }) => ({
               role: m.role as "user" | "assistant",
